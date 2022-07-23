@@ -65,9 +65,8 @@ export default function HomeScreen({navigation}) {
     useEffect(() => {
         getUser()
         getQuizes()
-        console.log(quizes)
-        console.log('ola')
     }, []);
+
 
     // async function allQuizes() {
     //     let dados = await getQuizes()
@@ -136,19 +135,18 @@ export default function HomeScreen({navigation}) {
                         </View>
                     }}
                 /> */}
-                <Text>{quizes}</Text>
                 <FlatList
                     style={styles.flatlist}
                     data={quizes}
-                    renderItem={({quiz})=>{
+                    renderItem={(quiz)=>{
                         return <View onPress={() => navigation.navigate('QuizDetail',
                                 {
-                                    image: quiz.banner_image,
-                                    title: quiz.title,
-                                    description: quiz.short_description,
-                                    tag: quiz.search
+                                    image: quiz?.item?.banner_image,
+                                    title: quiz?.item?.title,
+                                    description: quiz?.item?.short_description,
+                                    tag: quiz?.item?.search
                                 })}>
-                            <Cards title={quiz.title} description={quiz.short_description} image={quiz.banner_image} tag={quiz.search}></Cards>
+                            <Cards title={quiz?.item?.title} description={quiz?.item?.short_description} image={quiz?.item?.banner_image} tag={quiz?.item?.search}></Cards>
                         </View>
                     }}
                 /> 

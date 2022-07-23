@@ -30,10 +30,7 @@ export default function Login({navigation}){
 
     useEffect(() => {
         getUser()
-        console.log(user)
-        //enter()
-       // console.log(user)
-       //console.log('oi')
+        //console.log(user)
     }, []);
 
 

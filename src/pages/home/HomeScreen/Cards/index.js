@@ -3,10 +3,11 @@ import { Text, View, Image} from 'react-native';
 import styles from "./styles";
 
 export default function Cards(props) {
+    console.log(props.image)
     return (
         <View style={styles.card}>
             <View style={styles.containerImage}>
-                <Image source={props.image} style={styles.image}></Image>
+                <Image source={{uri: props.image}} style={styles.image}></Image>
                 <View style={styles.tagBackground}>
                     <Text style={styles.tag}>{props.tag}</Text>
                 </View>
