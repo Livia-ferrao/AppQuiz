@@ -3,7 +3,6 @@ import { Text, View, Image} from 'react-native';
 import styles from "./styles";
 
 export default function Cards(props) {
-    console.log(props.image)
     return (
         <View style={styles.card}>
             <View style={styles.containerImage}>
@@ -12,7 +11,6 @@ export default function Cards(props) {
                     <Text style={styles.tag}>{props.tag}</Text>
                 </View>
             </View>
-            
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{props.title}</Text>
                 <Text style={styles.description}>{props.description}</Text>

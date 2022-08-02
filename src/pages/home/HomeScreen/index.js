@@ -7,71 +7,26 @@ import Cards from "./Cards"
 
 import axios from 'axios'
 
-//import quizItem from ""../../../../services/api.js"
-const quizItem = [
-    {
-      key: '1',
-      title: 'HTML básico ',
-      description: 'Testes seus conhecimentos em tags básicas...',
-      image: require('../../../img/card3.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '2',
-      title: 'HTML e CSS ',
-      description: 'Usando estilos inline no HTML',
-      image: require('../../../img/card2.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '3',
-      title: 'UI',
-      description: 'Questões sobre interface',
-      image: require('../../../img/card1.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '4',
-      title: 'Swift',
-      description: 'Advanced iOS apps',
-      image: require('../../../img/card4.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '5',
-      title: 'Scrum',
-      description: 'Advanced project organization course',
-      image: require('../../../img/card5.png'),
-      tag: 'MÉDIO',
-    },
-  ];
-
 export default function HomeScreen({navigation}) {
 
     const [user, setUser] = useState(null);
-    const [quizes, setQuizes] = useState([]);
-  
+    const [quizes, setQuizes] = useState(null);
+
     const getUser = async () => {
         const response = await axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/profile');
         setUser(response.data)
     }
-    
+
     const getQuizes = async () => {
-        const response = await axios.get(' https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/quizzes')
-        //return response.data
+        const response = await axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/quizzes')
         setQuizes(response.data)
     }
-    
+
     useEffect(() => {
         getUser()
         getQuizes()
     }, []);
 
-
-    // async function allQuizes() {
-    //     let dados = await getQuizes()
-    //     setQuizes(dados)
-    // }
 
     return (
         <View style={styles.containerAll}>
@@ -86,10 +41,12 @@ export default function HomeScreen({navigation}) {
             </View>
 
             <View style={styles.tags}>
+                <Text>{console.log('QUIZES')}</Text>
+                <Text>{console.log(quizes)}</Text>
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                input: 'HTML'
+                                input: `${quizes.search}`
                                 })} >
                     <Text style={styles.textTag}>#HTML</Text>
                 </TouchableOpacity>
@@ -97,7 +54,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                    input: 'UX'
+                                    input: `${quizes.search}`
                                 })} >
                     <Text style={styles.textTag}>#UX</Text>
                 </TouchableOpacity>
@@ -105,7 +62,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                    input: 'Swift'
+                                    input: `${quizes.search}`
                                 })} >
                     <Text style={styles.textTag}>#Swift</Text>
                 </TouchableOpacity>
@@ -113,46 +70,34 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                    input: 'UI'
+                                    input: `${quizes.search}`
                                 })} >
                     <Text style={styles.textTag}>#UI</Text>
                 </TouchableOpacity>
             </View>
             
-            <View>
-                {/* <FlatList
-                    style={styles.flatlist}
-                    data={quizItem}
-                    renderItem={({item})=>{
-                        return <View onPress={() => navigation.navigate('QuizDetail',
-                                {
-                                    image: item.image,
-                                    title: item.title,
-                                    description: item.description,
-                                    tag: item.tag
-                                })}>
-                            <Cards title={item.title} description={item.description} image={item.image} tag={item.tag}></Cards>
-                        </View>
-                    }}
-                /> */}
+            <View style={styles.testFlat}>
                 <FlatList
                     style={styles.flatlist}
                     data={quizes}
                     renderItem={(quiz)=>{
-                        return <View onPress={() => navigation.navigate('QuizDetail',
-                                {
+                        return <TouchableOpacity onPress={() => navigation.navigate('QuizDetail',
+                                {   
+                                    //banner_image: quiz?.item?.banner_image,
+                                    //description: quiz?.item?.description,
+                                    //title: quiz?.item?.title,
+                                    questions_count: quiz?.item?.questions_count,
+                                    id: quiz?.item?.id,
                                     image: quiz?.item?.banner_image,
                                     title: quiz?.item?.title,
-                                    description: quiz?.item?.short_description,
+                                    description: quiz?.item?.description,
                                     tag: quiz?.item?.search
                                 })}>
                             <Cards title={quiz?.item?.title} description={quiz?.item?.short_description} image={quiz?.item?.banner_image} tag={quiz?.item?.search}></Cards>
-                        </View>
+                        </TouchableOpacity>
                     }}
                 /> 
-                
             </View>
-
         </View>
     )
 }

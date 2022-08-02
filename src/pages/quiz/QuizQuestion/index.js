@@ -1,20 +1,43 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Text, View, Image, TouchableOpacity} from 'react-native';
 import styles from "./styles";
 import { FontAwesome } from "@expo/vector-icons"
 
+import axios from 'axios'
+
 
 export default function QuizQuestion({navigation, route}) {
-
+    const [questions, setQuestions] = useState(null)
+    const [counter, setCounter] = useState(0)
     const [click, setClick] = useState(false)
     const [win, setWin] = useState(false)
+
+
+    const getQuestions = async () => {
+        const response = await axios.get(`https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/questions/${route?.params?.id}`)
+        return response.data
+    }
+
+    // useEffect(() => {
+    //     getQuestions()
+    // }, []);
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await getQuestions()
+            setQuestions(data);
+        }
+        getData()
+        setClick(false)
+    }, [counter])
+
+
     const [borderButton1, setBorderButton1] = useState('#BEBAB3')
     const [borderButton2, setBorderButton2] = useState('#BEBAB3')
     const [borderButton3, setBorderButton3] = useState('#BEBAB3')
     const [backgroundButton1, setBackgroundButton1] = useState('')
     const [backgroundButton2, setBackgroundButton2] = useState('')
     const [backgroundButton3, setBackgroundButton3] = useState('')
-
 
     function checkWin(option) {
         if (!click){
@@ -37,20 +60,21 @@ export default function QuizQuestion({navigation, route}) {
             }
         }
     }
-    
     return (
         <View>
-            <View style={styles.header}>
+            {questions != null? <View>
+                <View style={styles.header}>
                 <TouchableOpacity 
                     style={styles.goBackButton}
                     onPress={() => navigation.goBack()}>
                     <FontAwesome name='chevron-left' size={20}/>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.numbers}>1 de 1</Text>
-            <Text style={styles.title}>Qual tag é usada para fazer títulos grandes</Text>
+
+            <Text style={styles.numbers}>1 de {questions?.data?.length}</Text>
+            {/* <Text style={styles.title}>{questions[counter].question_text}</Text> */}
             <View style={styles.imageBorder}>
-                <Image style={styles.image} source={route.params.image}/>
+                <Image style={styles.image} source={{uri: questions?.data[counter]?.banner_image}}/>
             </View>
 
             <View>
@@ -65,8 +89,8 @@ export default function QuizQuestion({navigation, route}) {
                         marginBottom: 16,
                         backgroundColor: backgroundButton1,
                     }}
-                    onPress={()=>{ checkWin(1); setWin(false) }}>    
-                    <Text style={styles.markDown}>A.  {"<h5>"}</Text>
+                    onPress={()=>{checkWin(questions?.data[counter]?.correct_answer_index); setWin(false)}}>    
+                    <Text style={styles.markDown}>A.  {""}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -99,18 +123,27 @@ export default function QuizQuestion({navigation, route}) {
                     <Text style={styles.markDown}>C.  {"<h1>"}</Text>
                 </TouchableOpacity>
             </View>
+            </View>:<View><Text>oi</Text></View> }
 
-            {click? 
+            {click && questions?.data?.length >= counter? 
+            <TouchableOpacity style={styles.buttonBig}
+                    onPress={() => setCounter(counter + 1)}>
+                    <Text style={styles.buttonResult}>Continuar</Text>
+                </TouchableOpacity>: <View/>}
+
+
+            {click && questions?.data?.length == counter-1? 
             <TouchableOpacity style={styles.buttonBig}
                     onPress={() => navigation.navigate('QuizResults',
                     {
                         win: win,
-                        image: route.params.image,
+                        image: questions?.data?.banner_image,
                         tag: route.params.tag,
                         title: route.params.title
                     })}>
                     <Text style={styles.buttonResult}>Continuar</Text>
                 </TouchableOpacity>: <View/>}
+            
         </View>
     );
 } 

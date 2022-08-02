@@ -5,73 +5,80 @@ import styles from "./styles"
 import {FontAwesome} from "@expo/vector-icons";
 
 import Cards from '../HomeScreen/Cards'
-//import quizItem from "../../../services/api.js"
+import axios from 'axios'
 
-const itens = [
-    {
-      key: '1',
-      title: 'HTML básico ',
-      description: 'Testes seus conhecimentos em tags básicas...',
-      image: require('../../../img/card3.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '2',
-      title: 'HTML e CSS ',
-      description: 'Usando estilos inline no HTML',
-      image: require('../../../img/card2.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '3',
-      title: 'UI',
-      description: 'Questões sobre interface',
-      image: require('../../../img/card1.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '4',
-      title: 'Swift',
-      description: 'Advanced iOS apps',
-      image: require('../../../img/card4.png'),
-      tag: 'FÁCIL',
-    },
-    {
-      key: '5',
-      title: 'Scrum',
-      description: 'Advanced project organization course',
-      image: require('../../../img/card5.png'),
-      tag: 'MÉDIO',
-    },
-  ];
+// const itens = [
+//     {
+//       key: '1',
+//       title: 'HTML básico ',
+//       description: 'Testes seus conhecimentos em tags básicas...',
+//       image: require('../../../img/card3.png'),
+//       tag: 'FÁCIL',
+//     },
+//     {
+//       key: '2',
+//       title: 'HTML e CSS ',
+//       description: 'Usando estilos inline no HTML',
+//       image: require('../../../img/card2.png'),
+//       tag: 'FÁCIL',
+//     },
+//     {
+//       key: '3',
+//       title: 'UI',
+//       description: 'Questões sobre interface',
+//       image: require('../../../img/card1.png'),
+//       tag: 'FÁCIL',
+//     },
+//     {
+//       key: '4',
+//       title: 'Swift',
+//       description: 'Advanced iOS apps',
+//       image: require('../../../img/card4.png'),
+//       tag: 'FÁCIL',
+//     },
+//     {
+//       key: '5',
+//       title: 'Scrum',
+//       description: 'Advanced project organization course',
+//       image: require('../../../img/card5.png'),
+//       tag: 'MÉDIO',
+//     },
+//   ];
 
 
-export default function Search({navigation, route }) {
+export default function Search({navigation, route}) {
 
-    const searchInit = () => {if(route.params?.input){
-        return route.params.input
-      } else {
-        return null
-      }}
-
-    const [search, setSearch] = useState(searchInit)
+    const [quizes, setQuizes] = useState(null)
+    const [search, setSearch] = useState(searchFirst)
     const [content, setContent] = useState(null) 
     const [contentLenght, setContentLength] = useState(-1)
     const [change, setChange] = useState(true)
 
+    const getQuizes = async () => {
+        const response = await axios.get(`https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/quizzes?search=${route?.params?.input}`)
+        setQuizes(response.data)
+    }
+
+    const searchFirst = () => {
+        if(route?.params?.input == true){
+        return route?.params?.input
+      } else {
+        return null
+      }}
+
     function searching() {
         if (search !== null) {
-            let quizes = []
+            let quizes_all = []
             for (let i in itens) { 
                 if (itens[i].title.toLowerCase().includes(search.toLowerCase())){
-                    quizes.push(itens[i])
+                    itens_all.push(itens[i])
                 }
             }
-            setContent(quizes)
-            if (quizes.length == 0) {
+            setContent(quizes_all)
+            if (quizes_all.length == 0) {
                 setContentLength(-1)
             } else {
-                setContentLength(quizes.length)
+                setContentLength(quizes_all.length)
             }
         
         } else {
@@ -81,6 +88,7 @@ export default function Search({navigation, route }) {
     }
 
     useEffect(() => {
+        getQuizes()
         searching()
         if (change) {
             setChange(false)
@@ -92,7 +100,6 @@ export default function Search({navigation, route }) {
         <Pressable onPress={Keyboard.dismiss} style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity
-                   // onPress={()=>{navigation.goBack()}}
                     style={styles.goBackButton}
                     onPress={() => {setSearch(null)
                                     navigation.goBack()}}>

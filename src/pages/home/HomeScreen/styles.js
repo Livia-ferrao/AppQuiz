@@ -5,7 +5,12 @@ const styles = StyleSheet.create({
     width:'100%',
     height: '100%',
     marginLeft: 16,
-    marginTop: 52,
+    // marginTop: 52,
+    paddingTop: 52
+ },
+ testFlat: {
+    flex: 1,
+    //backgroundColor: 'red'
  },
  textInit:{
     color: '#3C3A36',

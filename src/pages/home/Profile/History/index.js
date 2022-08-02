@@ -1,62 +1,33 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import {View, Text, TouchableOpacity, FlatList} from "react-native"
 
 import styles from "./styles"
 import {FontAwesome} from "@expo/vector-icons";
 
-import Cards from './HistoryCards'
+import HistoryCards from './HistoryCards'
+import axios from 'axios'
 
-const itens = [
-    {
-      key: '1',
-      title: 'HTML básico ',
-      description: 'Testes seus conhecimentos em tags básicas...',
-      image: require('../../../../img/card1.png'),
-      tag: 'FÁCIL',
-      date: '25/11/2021',
-      right: 6
-    },
-    {
-      key: '2',
-      title: 'HTML e CSS ',
-      description: 'Usando estilos inline no HTML',
-      image: require('../../../../img/card2.png'),
-      tag: 'FÁCIL',
-      date: '25/11/2021',
-      right: 10
-    },
-    {
-      key: '3',
-      title: 'UI',
-      description: 'Questões sobre interface',
-      image: require('../../../../img/card3.png'),
-      tag: 'FÁCIL',
-      date: '25/11/2021',
-      right: 5
-    },
-    {
-      key: '4',
-      title: 'Swift',
-      description: 'Advanced iOS apps',
-      image: require('../../../../img/card1.png'),
-      tag: 'FÁCIL',
-      date: '25/11/2021',
-      right: 8
-    },
-    {
-      key: '5',
-      title: 'Scrum',
-      description: 'Advanced project organization course',
-      image: require('../../../../img/card2.png'),
-      tag: 'MÉDIO',
-      date: '25/11/2021',
-      right: 4
-    },
-  ];
 
 export default function History({navigation}) {
 
+  const [quizes, setQuizes] = useState([]);
+  
+  const getQuizes = async () => {
+      const response = await axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/quizzes?is_answered=true')
+      return response.data
+  }
+  
+    useEffect(() => {
+    const getData = async () => {
+        const data = await getQuizes()
+        setQuizes(data);
+    }
+    getData()
+    }, [])
+
+
   const color = (item) => {
+    console.log(item)
     let color = '';
     (item>=6) ? color = '#5BA092': color ='#EF4949';
     return(color)
@@ -76,11 +47,21 @@ export default function History({navigation}) {
               <View>
                   <FlatList
                       style={styles.itens}
-                      data={itens}
-                      renderItem={({item})=>{
+                      data={quizes}
+                      renderItem={(quiz)=>{
                           return <TouchableOpacity>
-                                      <Cards image={item.image} title={item.title} description={item.description} date={item.date} right={item.right} color={color(item.right)}/>
-                              </TouchableOpacity>
+                                      {/* <HistoryCards title={quiz?.item?.title} description={quiz?.item?.short_description} image={quiz?.item?.banner_image} tag={quiz?.item?.search}></HistoryCards> */}
+                                  
+                                      <HistoryCards banner_image={quiz?.item?.banner_image} 
+                                      title={quiz?.item?.title} 
+                                      short_description={quiz?.item?.short_description} 
+                                      date={quiz?.item?.date} 
+                                      difficulty={quiz?.item?.difficulty} 
+                                      color={color(quiz?.item?.correct_answers_count)} 
+                                      correct_answers_count={quiz?.item?.correct_answers_count}
+                                      questions_count={quiz?.item?.questions_count}
+                                      />
+                                </TouchableOpacity>
                           }}
                   />
               </View>
