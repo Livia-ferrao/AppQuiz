@@ -65,38 +65,6 @@ export default function App() {
   const [showApp, setShowApp] = useState(false)
   var skip = () => {setShowApp(true)};
   
-  // async function getUserData() {
-  // try {
-  //   const response = await axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/profile');
-  //   return response.data;
-  // } catch (error) {
-  //   console.error(error);
-  // }
-  // }
-
-  // const getUser = async () => {
-  //   const response = await axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/profile');
-  //   console.log(response.data)
-  // }
-
-  // getUser()
-
-  // const [userData, setUserData] = useState(null)
-  // const [updateData, setUpdateData] = useState(false)
-
-  // axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/profile').then((response) => console.log(response.data))
-
-  // useEffect(() => {
-  //   getUserData().then((data) => {
-  //     setUserData(data)
-  //     console.log('---')
-  //     console.log(userData)
-  //   })
-  //   if(updateData && userData!==null){
-  //     setUpdateData(false)
-  //   }
-  // }, [updateData])
-
 
   return (
     <>

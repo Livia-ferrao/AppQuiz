@@ -41,8 +41,6 @@ export default function HomeScreen({navigation}) {
             </View>
 
             <View style={styles.tags}>
-                {/* <Text>{console.log('QUIZES')}</Text>
-                <Text>{console.log(quizes)}</Text> */}
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
@@ -84,8 +82,6 @@ export default function HomeScreen({navigation}) {
                         return <TouchableOpacity onPress={() => navigation.navigate('QuizDetail',
                                 {   
                                     //banner_image: quiz?.item?.banner_image,
-                                    //description: quiz?.item?.description,
-                                    //title: quiz?.item?.title,
                                     questions_count: quiz?.item?.questions_count,
                                     id: quiz?.item?.id,
                                     image: quiz?.item?.banner_image,

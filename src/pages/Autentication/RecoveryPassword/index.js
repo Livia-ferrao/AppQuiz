@@ -20,7 +20,6 @@ export default function RecoveryPassword({navigation}) {
                     <TextInput 
                         style={styles.input}
                         placeholder= "Digite seu endereço de e-mail"
-                        //keyboardType="email-address"
                     />
                 </View>
                 <View>

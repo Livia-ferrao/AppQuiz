@@ -28,20 +28,17 @@ export default function SignUp({navigation}) {
                         style={styles.input}
                         placeholder= "Nome"
                         onChangeText={(value) => setName(value)}
-                        //keyboardType="default"
                     />
                     <TextInput 
                         style={styles.input}
                         placeholder= "E-mail"
                         onChangeText={(value) => setEmail(value)}
-                        //keyboardType="email-address"
                     />
                     <View>
                         <TextInput 
                             style={styles.input}
                             placeholder= "Senha"
                             onChangeText={(value) => setSenha(value)}
-                            //keyboardType="password"
                         />
                         <TouchableOpacity style={{position:'absolute'}}>
                             <FontAwesome style={{position:'absolute', top:30, left:320}} name='eye-slash' size={20}/>
