@@ -50,8 +50,8 @@ imageBorder:{
 },
  image:{
     borderRadius: 8,
-    width: 311,
-    height: 171,
+    width: 343,
+    height: 191,
 },
  markDown: {
     color: '#3C3A36',

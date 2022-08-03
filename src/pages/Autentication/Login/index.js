@@ -6,16 +6,6 @@ import {FontAwesome} from "@expo/vector-icons";
 
 import axios from 'axios'
 
-// async function getUser() {
-//   try {
-//     const response = await axios.get('https://my-json-server.typicode.com/higorpo/trilha-dev-json-server/profile');
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-//   }
-
 
 export default function Login({navigation}){
 
@@ -40,16 +30,6 @@ export default function Login({navigation}){
         }
     }
 
-    // async function enter() {
-    //     // let dados = await getUser()
-    //     // setUser(dados)
-    //     // console.log(dados)
-    //     //navigation.navigate('HomeScreen')
-    //      if (email == user.email)  {
-    //         navigation.navigate('HomeScreen')
-    //      }
-    // }
-
     return (
         <Pressable onPress={Keyboard.dismiss} style={styles.loginContainer}>
             <View >
@@ -60,14 +40,12 @@ export default function Login({navigation}){
                     style={styles.input}
                     placeholder= "E-mail"
                     onChangeText={(value) => setEmail(value)}
-                    //keyboardType="email-address"
                 />
                 <View>
                     <TextInput 
                         style={styles.input}
                         placeholder= "Senha"
                         onChangeText={(value) => setSenha(value)}
-                        //keyboardType="visible-password"
                     />
                     <TouchableOpacity style={{position:'absolute'}}>
                         <FontAwesome style={{position:'absolute', top:30, left:320}} name='eye-slash' size={20}/>

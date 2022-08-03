@@ -41,12 +41,12 @@ export default function HomeScreen({navigation}) {
             </View>
 
             <View style={styles.tags}>
-                <Text>{console.log('QUIZES')}</Text>
-                <Text>{console.log(quizes)}</Text>
+                {/* <Text>{console.log('QUIZES')}</Text>
+                <Text>{console.log(quizes)}</Text> */}
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                input: `${quizes.search}`
+                                input: 'html'
                                 })} >
                     <Text style={styles.textTag}>#HTML</Text>
                 </TouchableOpacity>
@@ -54,7 +54,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                    input: `${quizes.search}`
+                                    input: 'ux'
                                 })} >
                     <Text style={styles.textTag}>#UX</Text>
                 </TouchableOpacity>
@@ -62,7 +62,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                    input: `${quizes.search}`
+                                    input: 'swift'
                                 })} >
                     <Text style={styles.textTag}>#Swift</Text>
                 </TouchableOpacity>
@@ -70,7 +70,7 @@ export default function HomeScreen({navigation}) {
                 <TouchableOpacity style={styles.buttonTag}
                                 onPress={() => navigation.navigate('Search',
                                 {
-                                    input: `${quizes.search}`
+                                    input: 'ui'
                                 })} >
                     <Text style={styles.textTag}>#UI</Text>
                 </TouchableOpacity>

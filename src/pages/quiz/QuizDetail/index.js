@@ -30,12 +30,11 @@ export default function QuizDetail({navigation, route}) {
 
     async function nextScreen(){
         let question = await getQuestions()
-        navigation.navigate('QuizQuestion', route?.params?.id)
-    } 
-
+        navigation.navigate('QuizQuestion', {id: route?.params?.id })
+    }
+    
     return (
         <View>
-            <Text>{console.log(questions)}</Text>
             <View style={styles.header}>
                 <TouchableOpacity 
                     style={styles.goBackButton}

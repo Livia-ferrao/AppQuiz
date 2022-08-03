@@ -66,14 +66,12 @@ const styles = StyleSheet.create({
     height: 32,
     left: 16,
     top: 12,
-    //textAlign: 'flex-start',
     fontSize: 24,
  },
  itens: {
     left: 16,
     top: 32,
  },
-
  imagePage3: {
     alignSelf: 'center',
     marginTop: 25,
